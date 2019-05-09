@@ -13,7 +13,7 @@
 
 void child_process(void)
 {
-  sleep(2);
+  sleep(1);
   char msg[MAXBUF];
   struct sockaddr_in addr = {0};
   int n, sockfd,num=1;
@@ -79,15 +79,14 @@ int main()
     epoll_ctl(epfd, EPOLL_CTL_ADD, ev.data.fd, &ev); 
   }
   
-  sleep(1);
   while(1){
- 	puts("round again");
+    puts("round again");
   	int nfds = epoll_wait(epfd, events, 5, 10000);
     for(i=0;i<nfds;i++) {
-	  memset(buffer,0,MAXBUF);
-	  read(events[i].data.fd, buffer, MAXBUF);
+      memset(buffer,0,MAXBUF);
+      read(events[i].data.fd, buffer, MAXBUF);
       puts(buffer);
-	}
+	  }
   }
   return 0;
 }

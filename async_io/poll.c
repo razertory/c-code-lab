@@ -14,7 +14,7 @@
 
 void child_process(void)
 {
-  sleep(2);
+  sleep(1);
   char msg[MAXBUF];
   struct sockaddr_in addr = {0};
   int n, sockfd,num=1;
@@ -76,8 +76,6 @@ int main()
     pollfds[i].events = POLLIN;
   }
   
-  sleep(1);
-
   while(1){
  	  puts("round again");
     poll(pollfds, 5, 5000);
