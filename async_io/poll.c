@@ -19,23 +19,25 @@ void child_process(void)
   struct sockaddr_in addr = {0};
   int n, sockfd,num=1;
   srandom(getpid());
-  /* Create socket and connect to server */
+
+  /* 创建 socket */
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   addr.sin_family = AF_INET;
   addr.sin_port = htons(2000);
   addr.sin_addr.s_addr = inet_addr("127.0.0.1");
  
+  /* 连接到 server */
   connect(sockfd, (struct sockaddr*)&addr, sizeof(addr));
- 
   printf("child {%d} connected \n", getpid());
+
+  /* 往 server 写数据 */
   while(1){
-        int sl = (random() % 10 ) +  1;
-        num++;
-     	sleep(sl);
-  	sprintf (msg, "Test message %d from client %d", num, getpid());
-  	n = write(sockfd, msg, strlen(msg));	/* Send message */
+    int sl = (random() % 10 ) +  1;
+    num++;
+    sleep(sl);
+    sprintf(msg, "Test message %d from client %d", num, getpid());
+    n = write(sockfd, msg, strlen(msg));	/* Send message */
   }
- 
 }
  
 int main()
