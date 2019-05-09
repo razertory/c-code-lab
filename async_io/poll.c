@@ -28,7 +28,7 @@ void child_process(void)
  
   /* 连接到 server */
   connect(sockfd, (struct sockaddr*)&addr, sizeof(addr));
-  printf("child {%d} connected \n", getpid());
+  printf("client {%d} connected \n", getpid());
 
   /* 往 server 写数据 */
   while(1){
@@ -44,11 +44,7 @@ int main()
 {
   char buffer[MAXBUF];
   int fds[5];
-  struct pollfd {
-      int fd;
-      short events; 
-      short revents;
-  }pollfds[5];
+  struct pollfd pollfds[5];
 
   struct sockaddr_in addr;
   struct sockaddr_in client;
@@ -81,17 +77,18 @@ int main()
   }
   
   sleep(1);
+
   while(1){
  	  puts("round again");
     poll(pollfds, 5, 5000);
     for(i=0;i<5;i++) {
-		if (pollfds[i].revents & POLLIN){
-			pollfds[i].revents = 0;
-			memset(buffer,0,MAXBUF);
-			read(pollfds[i].fd, buffer, MAXBUF);
-			puts(buffer);
-		}
-	}
+      if (pollfds[i].revents & POLLIN){
+        pollfds[i].revents = 0;
+        memset(buffer,0,MAXBUF);
+        read(pollfds[i].fd, buffer, MAXBUF);
+        puts(buffer);
+      }
+	  }
   }
   return 0;
 }

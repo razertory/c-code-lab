@@ -64,7 +64,7 @@ int main()
   addr.sin_port = htons(2000);
   addr.sin_addr.s_addr = INADDR_ANY;
   bind(sockfd,(struct sockaddr*)&addr ,sizeof(addr));
-  listen (sockfd, 5); 
+  listen(sockfd, 5); 
  
   for (i=0;i<5;i++) 
   {
